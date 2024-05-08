@@ -1,36 +1,53 @@
 from flask import Flask, render_template, json, redirect
-from flask_mysqldb import MySQL
 from flask import request
+import datetime
 import os
+
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_chafinc'
-app.config['MYSQL_PASSWORD'] = '4013' #last 4 of onid
-app.config['MYSQL_DB'] = 'cs340_chafinc'
-app.config['MYSQL_CURSORCLASS'] = "DictCursor"
-
-
-mysql = MySQL(app)
+year = datetime.date.today().year
 
 
 # Routes
 @app.route('/')
-def root():
-    query = "SELECT * FROM diagnostic;"
-    query1 = 'DROP TABLE IF EXISTS diagnostic;';
-    query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-    query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working for yourONID!")';
-    query4 = 'SELECT * FROM diagnostic;';
-    cur = mysql.connection.cursor()
-    cur.execute(query1)
-    cur.execute(query2)
-    cur.execute(query3)
-    cur.execute(query4)
-    results = cur.fetchall()
+def index():
+    """
+    Render the homepage of the application.
+    """
+    return render_template('index.html', year=year)
 
-    return "<h1>MySQL Results</h1>" + str(results[0])
+
+@app.route('/customers')
+def customers():
+    """
+    Render the customers page of the application.
+    """
+    return render_template('customers.html', year=year)
+
+
+@app.route('/employees')
+def employees():
+    """
+    Render the employees page of the application.
+    """
+    return render_template('employees.html', year=year)
+
+
+@app.route('/orders')
+def orders():
+    """
+    Render the orders page of the application.
+    """
+    return render_template('orders.html', year=year)
+
+
+@app.route('/menu')
+def menu():
+    """
+    Render the menu page of the application.
+    """
+    return render_template('menu.html', year=year)
 
 
 # Listener
