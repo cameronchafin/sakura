@@ -36,5 +36,5 @@ def root():
 # Listener
 if __name__ == "__main__":
 
-    #Start the app on port 3000, it will be different once hosted
+    #Start the app on port 2398
     app.run(port=2398, debug=True)

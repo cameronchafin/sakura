@@ -1,0 +1,19 @@
+# Ignore virtual environments
+venv/
+.env
+pipenv/
+.venv/
+
+# Ignore temporary files
+*.pyc
+*.pyo
+
+# Ignore editor-specific files and directories
+*.pycproject
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+__pycache__/
+/.vscode
