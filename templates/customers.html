@@ -6,6 +6,82 @@ Customers
 
 {% block content %}
 
-<p>This is the Customers page.</p>
+<div class="container my-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <h1>Customers</h1>
+        <button type="button" class="btn btn-success">Add New Customer</button>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>John Doe</td>
+            <td>213-485-6048</td>
+            <td>jdoe@gmail.com</td>
+            <td>
+                <button type="button" class="btn btn-warning">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Bob Smith</td>
+            <td>213-445-6678</td>
+            <td>bsmith@gmail.com</td>
+            <td>
+                <button type="button" class="btn btn-warning">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Bob Joe</td>
+            <td>213-908-3456</td>
+            <td>bjoe@gmail.com</td>
+            <td>
+                <button type="button" class="btn btn-warning">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>Ricky Bobby</td>
+            <td>213-333-4455</td>
+            <td>rbobby@gmail.com</td>
+            <td>
+                <button type="button" class="btn btn-warning">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+</div>
 
 {% endblock %}
