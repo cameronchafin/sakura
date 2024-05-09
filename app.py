@@ -50,6 +50,14 @@ def menu():
     return render_template('menu.html', year=year)
 
 
+@app.route('/order_details')
+def order_details():
+    """
+    Render the order details page of the application.
+    """
+    return render_template('order_details.html', year=year)
+
+
 # Listener
 if __name__ == "__main__":
 

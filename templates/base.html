@@ -39,7 +39,8 @@
                         <a class="nav-link {% if request.path == url_for('customers') %}active{% endif %}" href="{{ url_for('customers') }}">Customers</a>
                         <a class="nav-link {% if request.path == url_for('employees') %}active{% endif %}" href="{{ url_for('employees') }}">Employees</a>
                         <a class="nav-link {% if request.path == url_for('orders') %}active{% endif %}" href="{{ url_for('orders') }}">Orders</a>
-                        <a class="nav-link {% if request.path == url_for('menu') %}active{% endif %}" href="{{ url_for('menu') }}">Menu</a>
+                        <a class="nav-link {% if request.path == url_for('menu') %}active{% endif %}" href="{{ url_for('menu') }}">Menu Items</a>
+                        <a class="nav-link {% if request.path == url_for('order_details') %}active{% endif %}" href="{{ url_for('order_details') }}">Order Details</a>
                     </div>
                 </div>
             </div>
