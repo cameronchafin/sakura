@@ -40,3 +40,55 @@
     background-color: #F78764;
     color: #fff;
 }
+
+
+/* Jumbotron */
+
+.jumbotron {
+    height: 400px;
+    position: relative;
+    background: no-repeat center center;
+    background-size: cover;
+    background-attachment: scroll;
+}
+
+.jumbo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #212529;
+    opacity: 0.5;
+}
+
+.jumbo-title {
+    position: relative;
+    color: #fafafa;
+}
+
+.jumbo-subheader {
+    font-size: 1.1rem;
+}
+
+
+/* Headings */
+
+.big-heading {
+    font-size: 5rem;
+    line-height: 1.5;
+}
+
+.medium-heading {
+    font-size: 2.5rem;
+    line-height: 1.5;
+}
+
+.small-heading {
+    font-size: 1.7rem;
+    line-height: 1.5;
+}
+
+.subheading {
+    font-size: 1.1rem;
+}
