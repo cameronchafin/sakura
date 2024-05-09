@@ -20,8 +20,8 @@ Orders
         <thead>
           <tr>
             <th scope="col">id</th>
-            <th scope="col">Customer id</th>
-            <th scope="col">Employee id</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Employee</th>
             <th scope="col">Order Date</th>
             <th scope="col">Status</th>
             <th scope="col">Total Amount</th>
@@ -31,8 +31,8 @@ Orders
         <tbody class="table-group-divider">
           <tr>
             <th scope="row">1</th>
-            <td>1</td>
-            <td>5</td>
+            <td>John Doe</td>
+            <td>Peter Parker</td>
             <td>2024-02-01</td>
             <td>Paid</td>
             <td>20.00</td>
@@ -49,8 +49,8 @@ Orders
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>2</td>
-            <td>3</td>
+            <td>Bob Smith</td>
+            <td>Homer Simpson</td>
             <td>2024-02-02</td>
             <td>Paid</td>
             <td>27.00</td>
@@ -67,8 +67,8 @@ Orders
           </tr>
           <tr>
             <th scope="row">3</th>
-            <td>1</td>
-            <td>3</td>
+            <td>John Doe</td>
+            <td>Homer Simpson</td>
             <td>2024-02-03</td>
             <td>Paid</td>
             <td>28.00</td>
@@ -98,12 +98,26 @@ Orders
         <div class="modal-body">
             <form>
                 <div class="mb-3">
-                  <label for="inputCustomerId" class="form-label">Customer id</label>
-                  <input type="text" class="form-control" id="inputCustomerId" placeholder="Customer id">
+                    <label for="selectCustomer" class="form-label">Customer</label>
+                    <select class="form-select" aria-label="Customer Select">
+                        <option selected>Customer</option>
+                        <option value="1">John Doe</option>
+                        <option value="2">Bob Smith</option>
+                        <option value="3">Bob Joe</option>
+                        <option value="4">Ricky Bobby</option>
+                        <option value="4">Ned Flanders</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="inputEmployeeId" class="form-label">Employee id</label>
-                    <input type="text" class="form-control" id="inputEmployeeId" placeholder="Employee id">
+                    <label for="selectEmployee" class="form-label">Employee</label>
+                    <select class="form-select" aria-label="Employee Select">
+                        <option selected>Employee</option>
+                        <option value="1">Teddy Bear</option>
+                        <option value="2">Bill Nye</option>
+                        <option value="3">Homer Simpson</option>
+                        <option value="4">Peter Griffin</option>
+                        <option value="4">Peter Parker</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="inputOrderDate" class="form-label">Order Date</label>
@@ -112,16 +126,12 @@ Orders
                 <div class="mb-3">
                     <label for="selectStatus" class="form-label">Status</label>
                     <select class="form-select" aria-label="Status Select">
-                        <option selected>Category</option>
+                        <option selected>Status</option>
                         <option value="1">Placed</option>
                         <option value="2">Preparing</option>
                         <option value="3">Served</option>
                         <option value="4">Paid</option>
                     </select>
-                </div>
-                <div class="mb-3">
-                    <label for="inputTotalAmount" class="form-label">Total Amount</label>
-                    <input type="text" class="form-control" id="inputTotalAmount" placeholder="00.00">
                 </div>
             </form>
         </div>
@@ -144,30 +154,40 @@ Orders
         <div class="modal-body">
             <form>
                 <div class="mb-3">
-                  <label for="inputCustomerId" class="form-label">Customer id</label>
-                  <input type="text" class="form-control" id="inputCustomerId" placeholder="Customer id">
+                    <label for="selectCustomer" class="form-label">Customer</label>
+                    <select class="form-select" aria-label="Customer Select">
+                        <option selected>Customer</option>
+                        <option value="1">John Doe</option>
+                        <option value="2">Bob Smith</option>
+                        <option value="3">Bob Joe</option>
+                        <option value="4">Ricky Bobby</option>
+                        <option value="4">Ned Flanders</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="inputEmployeeId" class="form-label">Employee id</label>
-                    <input type="text" class="form-control" id="inputEmployeeId" placeholder="Employee id">
+                    <label for="selectEmployee" class="form-label">Employee</label>
+                    <select class="form-select" aria-label="Employee Select">
+                        <option selected>Employee</option>
+                        <option value="1">Teddy Bear</option>
+                        <option value="2">Bill Nye</option>
+                        <option value="3">Homer Simpson</option>
+                        <option value="4">Peter Griffin</option>
+                        <option value="4">Peter Parker</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="inputOrderDate" class="form-label">Order Date</label>
-                    <input type="date" class="form-control" id="inputOrderDate" placeholder="yyyy-mm-dd">
+                    <input type="date" class="form-control" id="inputOrderDate" placeholder="mm-dd-yyyy">
                 </div>
                 <div class="mb-3">
                     <label for="selectStatus" class="form-label">Status</label>
                     <select class="form-select" aria-label="Status Select">
-                        <option selected>Category</option>
+                        <option selected>Status</option>
                         <option value="1">Placed</option>
                         <option value="2">Preparing</option>
                         <option value="3">Served</option>
                         <option value="4">Paid</option>
                     </select>
-                </div>
-                <div class="mb-3">
-                    <label for="inputTotalAmount" class="form-label">Total Amount</label>
-                    <input type="text" class="form-control" id="inputTotalAmount" placeholder="00.00">
                 </div>
             </form>
         </div>

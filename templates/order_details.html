@@ -20,18 +20,20 @@ Order Details
         <thead>
           <tr>
             <th scope="col">id</th>
-            <th scope="col">Item id</th>
-            <th scope="col">Order id</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Date</th>
+            <th scope="col">Menu Item</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Total Amount</th>
+            <th scope="col">Price</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
           <tr>
             <th scope="row">1</th>
-            <td>1</td>
-            <td>1</td>
+            <td>John Doe</td>
+            <td>2024-02-01</td>
+            <td>Salmon Nigiri</td>
             <td>2</td>
             <td>5.00</td>
             <td>
@@ -47,8 +49,9 @@ Order Details
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>4</td>
-            <td>1</td>
+            <td>John Doe</td>
+            <td>2024-02-01</td>
+            <td>Takoyaki</td>
             <td>2</td>
             <td>5.00</td>
             <td>
@@ -77,20 +80,27 @@ Order Details
         <div class="modal-body">
             <form>
                 <div class="mb-3">
-                  <label for="inputItemId" class="form-label">Item id</label>
-                  <input type="text" class="form-control" id="inputItemId" placeholder="Item id">
+                    <label for="selectCustomer" class="form-label">Customer</label>
+                    <select class="form-select" aria-label="Customer Select">
+                        <option selected>Customer</option>
+                        <option value="1">John Doe</option>
+                        <option value="2">Bob Smith</option>
+                        <option value="3">Bob Joe</option>
+                        <option value="4">Ricky Bobby</option>
+                        <option value="4">Ned Flanders</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="inputOrderId" class="form-label">Order id</label>
-                    <input type="text" class="form-control" id="inputOrderId" placeholder="Order id">
+                    <label for="inputDate" class="form-label">Date</label>
+                    <input type="Date" class="form-control" id="inputDate" placeholder="mm-dd-yyyy">
+                </div>
+                <div class="mb-3">
+                  <label for="inputMenuItem" class="form-label">Menu Item</label>
+                  <input type="text" class="form-control" id="inputMenuItem" placeholder="Menu Item">
                 </div>
                 <div class="mb-3">
                     <label for="inputQuantity" class="form-label">Quantity</label>
                     <input type="text" class="form-control" id="inputQuantity" placeholder="0">
-                </div>
-                <div class="mb-3">
-                    <label for="inputTotalAmount" class="form-label">Total Amount</label>
-                    <input type="text" class="form-control" id="inputTotalAmount" placeholder="00.00">
                 </div>
             </form>
         </div>
@@ -113,20 +123,27 @@ Order Details
         <div class="modal-body">
             <form>
                 <div class="mb-3">
-                  <label for="inputItemId" class="form-label">Item id</label>
-                  <input type="text" class="form-control" id="inputItemId" placeholder="Item id">
+                    <label for="selectCustomer" class="form-label">Customer</label>
+                    <select class="form-select" aria-label="Customer Select">
+                        <option selected>Customer</option>
+                        <option value="1">John Doe</option>
+                        <option value="2">Bob Smith</option>
+                        <option value="3">Bob Joe</option>
+                        <option value="4">Ricky Bobby</option>
+                        <option value="4">Ned Flanders</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="inputOrderId" class="form-label">Order id</label>
-                    <input type="text" class="form-control" id="inputOrderId" placeholder="Order id">
+                    <label for="inputDate" class="form-label">Date</label>
+                    <input type="Date" class="form-control" id="inputDate" placeholder="mm-dd-yyyy">
+                </div>
+                <div class="mb-3">
+                  <label for="inputMenuItem" class="form-label">Menu Item</label>
+                  <input type="text" class="form-control" id="inputMenuItem" placeholder="Menu Item">
                 </div>
                 <div class="mb-3">
                     <label for="inputQuantity" class="form-label">Quantity</label>
                     <input type="text" class="form-control" id="inputQuantity" placeholder="0">
-                </div>
-                <div class="mb-3">
-                    <label for="inputTotalAmount" class="form-label">Total Amount</label>
-                    <input type="text" class="form-control" id="inputTotalAmount" placeholder="00.00">
                 </div>
             </form>
         </div>
