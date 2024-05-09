@@ -1,0 +1,42 @@
+/* Navbar */
+.navbar-custom {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.button {
+    color: #F78764;
+}
+
+.nav-link {
+    font-size: 1 rem;
+}
+
+.nav-link:hover {
+    color: #F78764;
+}
+
+
+/* Buttons */
+.custom-solid {
+    border-color: #F78764;
+    background-color: #F78764;
+    color: #fff;
+}
+
+.custom-solid:hover, .custom-white:focus {
+    border-color: #F78764;
+    background-color: #fff;
+    color: #F78764;
+}
+
+.custom-outline {
+    border-color: #F78764;
+    background-color: #fff;
+    color: #F78764;
+}
+
+.custom-outline:hover, .custom-green:focus {
+    border-color: #F78764;
+    background-color: #F78764;
+    color: #fff;
+}
