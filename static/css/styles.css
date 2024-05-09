@@ -23,7 +23,7 @@
     color: #fff;
 }
 
-.custom-solid:hover, .custom-white:focus {
+.custom-solid:hover {
     border-color: #F78764;
     background-color: #fff;
     color: #F78764;
@@ -35,7 +35,7 @@
     color: #F78764;
 }
 
-.custom-outline:hover, .custom-green:focus {
+.custom-outline:hover {
     border-color: #F78764;
     background-color: #F78764;
     color: #fff;
