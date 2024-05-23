@@ -156,6 +156,28 @@ def menu():
         cur.execute(query)
         data = cur.fetchall()
         cur.close()
+
+    # Add a new menu item
+    elif request.method == "POST":
+        dish_name = request.form['dish_name']
+        price = request.form['price']
+        description = request.form['description']
+        category = request.form.get('category')
+        current = True if request.form.get('current') == '1' else False
+        if dish_name and price and category and current:
+            query = "INSERT INTO MenuItems (dish_name, price, description, category, current) VALUES (%s, %s, %s, %s, %s)"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (dish_name, price, description, category, current))
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/menu')
+
+    if data is None:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM Menu")
+        data = cur.fetchall()
+        cur.close()
+
     return render_template('menu.html', data=data, year=year)
 
 

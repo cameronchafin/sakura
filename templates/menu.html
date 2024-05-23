@@ -62,22 +62,22 @@ Menu
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="/menu">
                 <div class="mb-3">
                   <label for="inputDishName" class="form-label">Dish Name</label>
-                  <input type="text" class="form-control" id="inputDishName" placeholder="Dish Name">
+                  <input type="text" class="form-control" id="inputDishName" name="dish_name" placeholder="Dish Name">
                 </div>
                 <div class="mb-3">
                     <label for="inputPrice" class="form-label">Price</label>
-                    <input type="text" class="form-control" id="inputPrice" placeholder="00.00">
+                    <input type="text" class="form-control" id="inputPrice" name="price" placeholder="00.00">
                 </div>
                 <div class="mb-3">
                     <label for="inputDescription" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="inputDescription" placeholder="Description">
+                    <input type="text" class="form-control" id="inputDescription" name="description" placeholder="Description">
                 </div>
                 <div class="mb-3">
                     <label for="selectCategory" class="form-label">Category</label>
-                    <select class="form-select" aria-label="Category Select">
+                    <select class="form-select" id="selectCategory" name="category" aria-label="Category Select">
                         <option selected>Category</option>
                         <option value="1">Nigiri</option>
                         <option value="2">Sashimi</option>
@@ -90,17 +90,17 @@ Menu
                 </div>
                 <div class="mb-3">
                     <label for="selectCurrent" class="form-label">Current</label>
-                    <select class="form-select" aria-label="Current Select">
+                    <select class="form-select" id="selectCurrent" name="current" aria-label="Current Select">
                         <option selected>Select</option>
                         <option value="1">1</option>
                         <option value="2">0</option>
                     </select>
                 </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn custom-solid">Add Menu Item</button>
+                </div>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn custom-solid">Add Menu Item</button>
         </div>
       </div>
     </div>
