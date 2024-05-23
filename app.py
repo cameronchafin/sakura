@@ -1,10 +1,23 @@
 from flask import Flask, render_template, json, redirect
+from flask_mysqldb import MySQL
 from flask import request
 import datetime
 import os
+import database.db_connector as db
+from dotenv import load_dotenv, find_dotenv
 
+
+db_connection = db.connect_to_database()
 
 app = Flask(__name__)
+
+app.config['MYSQL_HOST'] = os.environ.get("340DBHOST")
+app.config['MYSQL_USER'] = os.environ.get("340DBUSER")
+app.config['MYSQL_PASSWORD'] = os.environ.get("340DBPW")
+app.config['MYSQL_DB'] = os.environ.get("340DB")
+app.config['MYSQL_CURSORCLASS'] = "DictCursor"
+
+mysql = MySQL(app)
 
 year = datetime.date.today().year
 
@@ -18,12 +31,38 @@ def index():
     return render_template('index.html', year=year)
 
 
-@app.route('/customers')
+@app.route('/customers', methods=["POST", "GET"])
 def customers():
     """
     Render the customers page of the application.
     """
-    return render_template('customers.html', year=year)
+    data = None
+    if request.method == "GET":
+        query = "SELECT * FROM Customers"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        cur.close()
+
+    elif request.method == "POST":
+        customer_name = request.form["customer_name"]
+        phone_number = request.form["phone_number"]
+        email = request.form["email"]
+        if customer_name and phone_number and email:
+            query = "INSERT INTO Customers (customer_name, phone_number, email) VALUES (%s, %s, %s)"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (customer_name, phone_number, email))
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/customers')
+
+    if data is None:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM Customers")
+        data = cur.fetchall()
+        cur.close()
+
+    return render_template('customers.html', data=data, year=year)
 
 
 @app.route('/employees')

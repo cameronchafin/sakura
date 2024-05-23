@@ -27,70 +27,23 @@ Customers
           </tr>
         </thead>
         <tbody class="table-group-divider">
+          {% for customer in data %}
           <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>213-485-6048</td>
-            <td>jdoe@gmail.com</td>
+            <th scope="row">{{ customer.customer_id }}</th>
+            <td>{{ customer.customer_name }}</td>
+            <td>{{ customer.phone_number }}</td>
+            <td>{{ customer.email }}</td>
             <td>
-                <!-- Button trigger for edit customer modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editCustomerModal">
+                <!-- Buttons for actions -->
+                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editCustomerModal" onclick="setupEdit({{ customer.customer_id }})">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDelete({{ customer.customer_id }})">
                     <i class="fa-regular fa-trash-can"></i>
                 </button>
             </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Bob Smith</td>
-            <td>213-445-6678</td>
-            <td>bsmith@gmail.com</td>
-            <td>
-                <!-- Button trigger for edit customer modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editCustomerModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Bob Joe</td>
-            <td>213-908-3456</td>
-            <td>bjoe@gmail.com</td>
-            <td>
-                <!-- Button trigger for edit customer modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editCustomerModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Ricky Bobby</td>
-            <td>213-333-4455</td>
-            <td>rbobby@gmail.com</td>
-            <td>
-                <!-- Button trigger for edit customer modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editCustomerModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
 </div>
@@ -104,24 +57,24 @@ Customers
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="/customers">
                 <div class="mb-3">
                   <label for="inputName" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="inputName" placeholder="First Last">
+                  <input type="text" class="form-control" id="inputName" name="customer_name" placeholder="First Last">
                 </div>
                 <div class="mb-3">
                     <label for="inputPhone" class="form-label">Phone</label>
-                    <input type="text" class="form-control" id="inputPhone" placeholder="000-000-0000">
+                    <input type="text" class="form-control" id="inputPhone" name="phone_number" placeholder="000-000-0000">
                 </div>
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="inputEmail" name="email" placeholder="name@example.com">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn custom-solid">Add Customer</button>
                 </div>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn custom-solid">Add Customer</button>
         </div>
       </div>
     </div>
