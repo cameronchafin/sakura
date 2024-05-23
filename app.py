@@ -44,6 +44,7 @@ def customers():
         data = cur.fetchall()
         cur.close()
 
+    # Add a new customer
     elif request.method == "POST":
         customer_name = request.form["customer_name"]
         phone_number = request.form["phone_number"]
@@ -63,6 +64,19 @@ def customers():
         cur.close()
 
     return render_template('customers.html', data=data, year=year)
+
+
+# Delete a customer
+@app.route('/customers/delete', methods=['POST'])
+def delete_customer():
+    customer_id = request.form.get('customer_id')
+    if customer_id:
+        query = "DELETE FROM Customers WHERE customer_id = %s"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (customer_id))
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/customers')
 
 
 @app.route('/employees')
