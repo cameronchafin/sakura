@@ -138,6 +138,26 @@ def employees():
 
     return render_template('employees.html', data=data, year=year)
 
+# Todo: Delete Employee
+
+# Todo: Edit Employee
+
+
+@app.route('/menu', methods=["POST", "GET"])
+def menu():
+    """
+    Render the menu page of the application.
+    """
+    data = None
+    # Populate table with menu items from database
+    if request.method == "GET":
+        query = "SELECT * FROM MenuItems"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        cur.close()
+    return render_template('menu.html', data=data, year=year)
+
 
 @app.route('/orders')
 def orders():
@@ -145,14 +165,6 @@ def orders():
     Render the orders page of the application.
     """
     return render_template('orders.html', year=year)
-
-
-@app.route('/menu')
-def menu():
-    """
-    Render the menu page of the application.
-    """
-    return render_template('menu.html', year=year)
 
 
 @app.route('/order_details')

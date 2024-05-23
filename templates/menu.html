@@ -29,13 +29,14 @@ Menu
           </tr>
         </thead>
         <tbody class="table-group-divider">
+          {% for menu_item in data %}
           <tr>
-            <th scope="row">1</th>
-            <td>Salmon Nigiri</td>
-            <td>5.00</td>
-            <td>Fresh salmon over a bed of seasoned rice</td>
-            <td>Nigiri</td>
-            <td>1</td>
+            <th scope="row">{{ menu_item.item_id }}</th>
+            <td>{{ menu_item.dish_name }}</td>
+            <td>{{ menu_item.price }}</td>
+            <td>{{ menu_item.description }}</td>
+            <td>{{ menu_item.category }}</td>
+            <td>{{ menu_item.current }}</td>
             <td>
                 <!-- Button trigger for edit menu item modal -->
                 <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editMenuItemModal">
@@ -47,78 +48,7 @@ Menu
                 </button>
             </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Hamachi Sashimi</td>
-            <td>7.00</td>
-            <td>Premium yellowtail, served with jalapeno slices</td>
-            <td>Sashimi</td>
-            <td>1</td>
-            <td>
-                <!-- Button trigger for edit menu item modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editMenuItemModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Spicy Tuna Roll</td>
-            <td>6.00</td>
-            <td>Tuna mixed with spicy mayo and scallions</td>
-            <td>Maki Rolls</td>
-            <td>1</td>
-            <td>
-                <!-- Button trigger for edit menu item modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editMenuItemModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Takoyaki</td>
-            <td>5.00</td>
-            <td>Octopus balls topped with mayo and bonito flakes</td>
-            <td>Appetizers</td>
-            <td>1</td>
-            <td>
-                <!-- Button trigger for edit menu item modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editMenuItemModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>Mochi</td>
-            <td>6.00</td>
-            <td>Sweet rice cake filled with ice cream</td>
-            <td>Dessert</td>
-            <td>1</td>
-            <td>
-                <!-- Button trigger for edit menu item modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editMenuItemModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
 </div>
