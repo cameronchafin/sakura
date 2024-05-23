@@ -102,12 +102,41 @@ def update_customer():
     return redirect('/customers')
 
 
-@app.route('/employees')
+@app.route('/employees', methods=["POST", "GET"])
 def employees():
     """
     Render the employees page of the application.
     """
-    return render_template('employees.html', year=year)
+    data = None
+    # Populate table with employees from database
+    if request.method == "GET":
+        query = "SELECT * FROM Employees"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        cur.close()
+
+    # Add a new employee
+    elif request.method == "POST":
+        employee_name = request.form['employee_name']
+        phone_number = request.form['phone_number']
+        email = request.form['email']
+        current = True if request.form.get('current') == '1' else False
+        if employee_name and phone_number and email and current:
+            query = "INSERT INTO Employees (employee_name, phone_number, email, current) VALUES (%s, %s, %s, %s)"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (employee_name, phone_number, email, current))
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/employees')
+
+    if data is None:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM Employees")
+        data = cur.fetchall()
+        cur.close()
+
+    return render_template('employees.html', data=data, year=year)
 
 
 @app.route('/orders')
