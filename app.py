@@ -37,6 +37,8 @@ def customers():
     Render the customers page of the application.
     """
     data = None
+
+    # Populate table with customers from database
     if request.method == "GET":
         query = "SELECT * FROM Customers"
         cur = mysql.connection.cursor()
@@ -74,6 +76,27 @@ def delete_customer():
         query = "DELETE FROM Customers WHERE customer_id = %s"
         cur = mysql.connection.cursor()
         cur.execute(query, (customer_id))
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/customers')
+
+
+# Edit customer
+@app.route('/customers/update', methods=['POST'])
+def update_customer():
+    if request.method == 'POST':
+        customer_id = request.form['customer_id']
+        customer_name = request.form['customer_name']
+        phone_number = request.form['phone_number']
+        email = request.form['email']
+
+        cur = mysql.connection.cursor()
+        query = """
+        UPDATE Customers
+        SET customer_name = %s, phone_number = %s, email = %s
+        WHERE customer_id = %s
+        """
+        cur.execute(query, (customer_name, phone_number, email, customer_id))
         mysql.connection.commit()
         cur.close()
     return redirect('/customers')
