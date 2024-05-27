@@ -186,34 +186,61 @@ def orders():
     """
     Render the orders page of the application.
     """
-    data = None
-    # Populate table with orders from database
-    if request.method == "GET":
-        query = """
-        SELECT 
-            Orders.order_id,
-            Customers.customer_name,
-            Employees.employee_name,
-            Orders.order_date,
-            Orders.status,
-            Orders.total_amount
-        FROM 
-            Orders
-        JOIN 
-            Customers ON Orders.customer_id = Customers.customer_id
-        JOIN 
-            Employees ON Orders.employee_id = Employees.employee_id
-        """
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        data = cur.fetchall()
-        cur.close()
+    cur = mysql.connection.cursor()
 
-        for order in data:
-            if order['order_date']:
-                order['order_date'] = order['order_date'].strftime('%Y-%m-%d')
+    # Fetch customers for dropdown
+    cur.execute("SELECT customer_id, customer_name FROM Customers")
+    customers = cur.fetchall()
 
-    return render_template('orders.html', data=data, year=year)
+    # Fetch only current employees for dropdown
+    cur.execute("SELECT employee_id, employee_name FROM Employees WHERE current = 1")
+    employees = cur.fetchall()
+
+    # Add an order
+    if request.method == "POST":
+        customer_id = request.form['customer']
+        employee_id = request.form['employee']
+        order_date = request.form['date']
+        status = request.form.get('status')
+        # Initialize total_amount to 0.00 when creating a new order
+        total_amount = 0.00
+
+        if customer_id and employee_id and order_date and status:
+            query = """
+            INSERT INTO Orders (customer_id, employee_id, order_date, status, total_amount)
+            VALUES (%s, %s, %s, %s, %s)
+            """
+            cur.execute(query, (customer_id, employee_id, order_date, status, total_amount))
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/orders')
+
+    # Populate table with orders from database for GET or successful POST redirection
+    query = """
+    SELECT 
+        Orders.order_id,
+        Customers.customer_name,
+        Employees.employee_name,
+        Orders.order_date,
+        Orders.status,
+        Orders.total_amount
+    FROM 
+        Orders
+    JOIN 
+        Customers ON Orders.customer_id = Customers.customer_id
+    JOIN 
+        Employees ON Orders.employee_id = Employees.employee_id
+    """
+    cur.execute(query)
+    data = cur.fetchall()
+    cur.close()
+
+    # Format order date
+    for order in data:
+        if order['order_date']:
+            order['order_date'] = order['order_date'].strftime('%Y-%m-%d')
+
+    return render_template('orders.html', customers=customers, employees=employees, data=data, year=year)
 
 
 @app.route('/order_details')

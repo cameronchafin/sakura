@@ -61,36 +61,32 @@ Orders
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="/orders">
                 <div class="mb-3">
                     <label for="selectCustomer" class="form-label">Customer</label>
-                    <select class="form-select" aria-label="Customer Select">
-                        <option selected>Customer</option>
-                        <option value="1">John Doe</option>
-                        <option value="2">Bob Smith</option>
-                        <option value="3">Bob Joe</option>
-                        <option value="4">Ricky Bobby</option>
-                        <option value="4">Ned Flanders</option>
+                    <select class="form-select" name="customer" aria-label="Customer Select">
+                      <option selected disabled>Choose a Customer</option>
+                      {% for customer in customers %}
+                      <option value="{{ customer.customer_id }}">{{ customer.customer_name }}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="selectEmployee" class="form-label">Employee</label>
-                    <select class="form-select" aria-label="Employee Select">
-                        <option selected>Employee</option>
-                        <option value="1">Teddy Bear</option>
-                        <option value="2">Bill Nye</option>
-                        <option value="3">Homer Simpson</option>
-                        <option value="4">Peter Griffin</option>
-                        <option value="4">Peter Parker</option>
+                    <select class="form-select" name="employee" aria-label="Employee Select">
+                      <option selected disabled>Choose an Employee</option>
+                      {% for employee in employees %}
+                      <option value="{{ employee.employee_id }}">{{ employee.employee_name }}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="inputOrderDate" class="form-label">Order Date</label>
-                    <input type="date" class="form-control" id="inputOrderDate" placeholder="yyyy-mm-dd">
+                    <input type="date" class="form-control" id="inputOrderDate" name="date">
                 </div>
                 <div class="mb-3">
                     <label for="selectStatus" class="form-label">Status</label>
-                    <select class="form-select" aria-label="Status Select">
+                    <select class="form-select" name="status" aria-label="Status Select">
                         <option selected>Status</option>
                         <option value="1">Placed</option>
                         <option value="2">Preparing</option>
@@ -98,11 +94,11 @@ Orders
                         <option value="4">Paid</option>
                     </select>
                 </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn custom-solid">Add Order</button>
+                </div>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn custom-solid">Add Order</button>
         </div>
       </div>
     </div>
