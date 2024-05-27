@@ -181,12 +181,39 @@ def menu():
     return render_template('menu.html', data=data, year=year)
 
 
-@app.route('/orders')
+@app.route('/orders',  methods=["POST", "GET"])
 def orders():
     """
     Render the orders page of the application.
     """
-    return render_template('orders.html', year=year)
+    data = None
+    # Populate table with orders from database
+    if request.method == "GET":
+        query = """
+        SELECT 
+            Orders.order_id,
+            Customers.customer_name,
+            Employees.employee_name,
+            Orders.order_date,
+            Orders.status,
+            Orders.total_amount
+        FROM 
+            Orders
+        JOIN 
+            Customers ON Orders.customer_id = Customers.customer_id
+        JOIN 
+            Employees ON Orders.employee_id = Employees.employee_id
+        """
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        cur.close()
+
+        for order in data:
+            if order['order_date']:
+                order['order_date'] = order['order_date'].strftime('%Y-%m-%d')
+
+    return render_template('orders.html', data=data, year=year)
 
 
 @app.route('/order_details')

@@ -29,13 +29,14 @@ Orders
           </tr>
         </thead>
         <tbody class="table-group-divider">
+          {% for order in data %}
           <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>Peter Parker</td>
-            <td>2024-02-01</td>
-            <td>Paid</td>
-            <td>20.00</td>
+            <th scope="row">{{ order.order_id }}</th>
+            <td>{{ order.customer_name }}</td>
+            <td>{{ order.employee_name }}</td>
+            <td>{{ order.order_date }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.total_amount }}</td>
             <td>
                 <!-- Button trigger for edit order modal -->
                 <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderModal">
@@ -46,43 +47,7 @@ Orders
                     <i class="fa-regular fa-trash-can"></i>
                 </button>
             </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Bob Smith</td>
-            <td>Homer Simpson</td>
-            <td>2024-02-02</td>
-            <td>Paid</td>
-            <td>27.00</td>
-            <td>
-                <!-- Button trigger for edit order modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>John Doe</td>
-            <td>Homer Simpson</td>
-            <td>2024-02-03</td>
-            <td>Paid</td>
-            <td>28.00</td>
-            <td>
-                <!-- Button trigger for edit order modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
+            {% endfor %}
         </tbody>
       </table>
 </div>
