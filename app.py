@@ -138,7 +138,19 @@ def employees():
 
     return render_template('employees.html', data=data, year=year)
 
-# Todo: Delete Employee
+
+# Delete an Employee
+@app.route('/employees/delete', methods=['POST'])
+def delete_employee():
+    employee_id = request.form.get('employee_id')
+    if employee_id:
+        query = "DELETE FROM Employees WHERE employee_id = %s"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (employee_id))
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/employees')
+
 
 # Todo: Edit Employee
 
@@ -179,6 +191,19 @@ def menu():
         cur.close()
 
     return render_template('menu.html', data=data, year=year)
+
+
+# Delete a Menu Item
+@app.route('/menu/delete', methods=['POST'])
+def delete_menu_item():
+    item_id = request.form.get('item_id')
+    if item_id:
+        query = "DELETE FROM MenuItems WHERE item_id = %s"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (item_id))
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/menu')
 
 
 @app.route('/orders', methods=["POST", "GET"])
@@ -262,10 +287,11 @@ def order_details():
     cur.execute("SELECT item_id, dish_name FROM MenuItems")
     menu_items = cur.fetchall()
 
+    # Add an order detail
     if request.method == "POST":
-        order_id = request.form.get('order_id')
-        item_id = request.form.get('item_id')
-        quantity = request.form.get('quantity')
+        order_id = request.form['order_id']
+        item_id = request.form['item_id']
+        quantity = request.form['quantity']
         # Fetch the price of the selected menu item
         cur.execute("SELECT price FROM MenuItems WHERE item_id = %s", (item_id,))
         item_price = cur.fetchone()['price']

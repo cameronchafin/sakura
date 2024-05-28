@@ -1,5 +1,7 @@
+// ----- Customers ----- //
+
 // Delete customer
-function setupDelete(customerId) {
+function setupDeleteCustomer(customerId) {
     document.getElementById('delete-customer-id').value = customerId;
 }
 
@@ -17,3 +19,27 @@ function setupEdit(button) {
     document.getElementById('inputPhone_edit').value = customerPhone;
     document.getElementById('inputEmail_edit').value = customerEmail;
 }
+
+
+// ----- Employees ----- //
+
+// Delete employee
+function setupDeleteEmployee(employeeId) {
+    document.getElementById('delete-employee-id').value = employeeId;
+}
+
+
+// ----- Menu Items ----- //
+// Delete menu item
+function setupDeleteMenuItem(itemId) {
+    document.getElementById('delete-menu-item-id').value = itemId;
+}
+
+
+
+// ----- Orders ----- //
+
+
+
+
+// ----- Order Details ----- //
