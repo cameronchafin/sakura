@@ -45,3 +45,6 @@ function setupDeleteOrder(orderId) {
 
 
 // ----- Order Details ----- //
+function setupDeleteOrderDetail(orderDetailId) {
+    document.getElementById('delete-order-detail-id').value = orderDetailId;
+}

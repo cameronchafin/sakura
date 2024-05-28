@@ -31,6 +31,7 @@ def index():
     return render_template('index.html', year=year)
 
 
+# ---------- Customers ---------- #
 @app.route('/customers', methods=["POST", "GET"])
 def customers():
     """
@@ -102,6 +103,7 @@ def update_customer():
     return redirect('/customers')
 
 
+# ---------- Employees ---------- #
 @app.route('/employees', methods=["POST", "GET"])
 def employees():
     """
@@ -155,6 +157,7 @@ def delete_employee():
 # Todo: Edit Employee
 
 
+# ---------- Menu ---------- #
 @app.route('/menu', methods=["POST", "GET"])
 def menu():
     """
@@ -206,6 +209,7 @@ def delete_menu_item():
     return redirect('/menu')
 
 
+# ---------- Orders ---------- #
 @app.route('/orders', methods=["POST", "GET"])
 def orders():
     """
@@ -281,6 +285,7 @@ def delete_order():
     return redirect('/orders')
 
 
+# ---------- Order Details ---------- #
 @app.route('/order_details', methods=["POST", "GET"])
 def order_details():
     """
@@ -359,6 +364,43 @@ def order_details():
             detail['order_date'] = detail['order_date'].strftime('%Y-%m-%d')
 
     return render_template('order_details.html', orders=orders, menu_items=menu_items, details=details, year=year)
+
+
+# Delete an Order Detail
+@app.route('/order_details/delete', methods=['POST'])
+def delete_order_detail():
+    order_detail_id = request.form.get('order_detail_id')
+    if order_detail_id:
+        cur = mysql.connection.cursor()
+
+        # Fetch price, quantity, and id for order detail to be deleted
+        cur.execute("""
+            SELECT price, quantity, order_id 
+            FROM OrderDetails 
+            WHERE order_detail_id = %s
+        """, (order_detail_id,))
+        detail = cur.fetchone()
+
+        # calculate amount to be subtracted from order total
+        price = detail['price']
+        quantity = detail['quantity']
+        order_id = detail['order_id']
+        amount_to_subtract = float(price) * int(quantity)
+
+        # Delete order detail
+        query = "DELETE FROM OrderDetails WHERE order_detail_id = %s"
+        cur.execute(query, (order_detail_id,))
+
+        # Update total amount in Orders table
+        cur.execute("""
+            UPDATE Orders 
+            SET total_amount = total_amount - %s 
+            WHERE order_id = %s
+        """, (amount_to_subtract, order_id))
+
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/order_details')
 
 
 # Listener
