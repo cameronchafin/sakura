@@ -268,6 +268,19 @@ def orders():
     return render_template('orders.html', customers=customers, employees=employees, data=data, year=year)
 
 
+# Delete an Order
+@app.route('/orders/delete', methods=['POST'])
+def delete_order():
+    order_id = request.form.get('order_id')
+    if order_id:
+        query = "DELETE FROM Orders WHERE order_id = %s"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (order_id))
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/orders')
+
+
 @app.route('/order_details', methods=["POST", "GET"])
 def order_details():
     """

@@ -38,7 +38,9 @@ function setupDeleteMenuItem(itemId) {
 
 
 // ----- Orders ----- //
-
+function setupDeleteOrder(orderId) {
+    document.getElementById('delete-order-id').value = orderId;
+}
 
 
 
