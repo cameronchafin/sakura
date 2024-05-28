@@ -30,14 +30,15 @@ Order Details
           </tr>
         </thead>
         <tbody class="table-group-divider">
+          {% for detail in details %}
           <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>2024-02-01</td>
-            <td>Salmon Nigiri</td>
-            <td>5.00</td>
-            <td>2</td>
-            <td>10.00</td>
+            <th scope="row">{{ detail.order_detail_id }}</th>
+            <td>{{ detail.customer_name }}</td>
+            <td>{{ detail.order_date }}</td>
+            <td>{{ detail.menu_item }}</td>
+            <td>${{ detail.price }}</td>
+            <td>{{ detail.quantity }}</td>
+            <td>${{ detail.subtotal }}</td>
             <td>
                 <!-- Button trigger for edit order details modal -->
                 <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderDetailModal">
@@ -49,25 +50,7 @@ Order Details
                 </button>
             </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>John Doe</td>
-            <td>2024-02-01</td>
-            <td>Takoyaki</td>
-            <td>5.00</td>
-            <td>2</td>
-            <td>10.00</td>
-            <td>
-                <!-- Button trigger for edit order details modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderDetailModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fa-regular fa-trash-can"></i>
-                </button>
-            </td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
 </div>
@@ -81,35 +64,34 @@ Order Details
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="/order_details">
+              <div class="mb-3">
+                <label for="selectOrder" class="form-label">Select Order</label>
+                <select class="form-select" name="order_id" aria-label="Order Select">
+                  <option selected disabled>Choose an Order</option>
+                  {% for order in orders %}
+                  <option value="{{ order.order_id }}">{{ order.customer_name }} - {{ order.order_date.strftime('%Y-%m-%d') }}</option>
+                  {% endfor %}
+                </select>
+              </div>
                 <div class="mb-3">
-                    <label for="selectCustomer" class="form-label">Customer</label>
-                    <select class="form-select" aria-label="Customer Select">
-                        <option selected>Customer</option>
-                        <option value="1">John Doe</option>
-                        <option value="2">Bob Smith</option>
-                        <option value="3">Bob Joe</option>
-                        <option value="4">Ricky Bobby</option>
-                        <option value="4">Ned Flanders</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="inputDate" class="form-label">Date</label>
-                    <input type="Date" class="form-control" id="inputDate" placeholder="mm-dd-yyyy">
-                </div>
-                <div class="mb-3">
-                  <label for="inputMenuItem" class="form-label">Menu Item</label>
-                  <input type="text" class="form-control" id="inputMenuItem" placeholder="Menu Item">
+                  <label for="selectMenuItem" class="form-label">Menu Item</label>
+                  <select class="form-select" name="item_id" aria-label="Menu Item Select">
+                    <option selected disabled>Choose a Menu Item</option>
+                    {% for item in menu_items %}
+                    <option value="{{ item.item_id }}">{{ item.dish_name }}</option>
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="mb-3">
                     <label for="inputQuantity" class="form-label">Quantity</label>
-                    <input type="text" class="form-control" id="inputQuantity" placeholder="0">
+                    <input type="text" class="form-control" id="inputQuantity" name="quantity" placeholder="0">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn custom-solid">Add Order Detail</button>
                 </div>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn custom-solid">Add Order Detail</button>
         </div>
       </div>
     </div>

@@ -181,7 +181,7 @@ def menu():
     return render_template('menu.html', data=data, year=year)
 
 
-@app.route('/orders',  methods=["POST", "GET"])
+@app.route('/orders', methods=["POST", "GET"])
 def orders():
     """
     Render the orders page of the application.
@@ -215,7 +215,7 @@ def orders():
             cur.close()
             return redirect('/orders')
 
-    # Populate table with orders from database for GET or successful POST redirection
+    # Populate table with orders from database
     query = """
     SELECT 
         Orders.order_id,
@@ -243,12 +243,83 @@ def orders():
     return render_template('orders.html', customers=customers, employees=employees, data=data, year=year)
 
 
-@app.route('/order_details')
+@app.route('/order_details', methods=["POST", "GET"])
 def order_details():
     """
     Render the order details page of the application.
     """
-    return render_template('order_details.html', year=year)
+    cur = mysql.connection.cursor()
+
+    # Fetch existing orders and menu items for dropdowns
+    cur.execute("""
+    SELECT Orders.order_id, Customers.customer_name, Orders.order_date
+    FROM Orders
+    JOIN Customers ON Orders.customer_id = Customers.customer_id
+    ORDER BY Orders.order_date DESC
+    """)
+    orders = cur.fetchall()
+
+    cur.execute("SELECT item_id, dish_name FROM MenuItems")
+    menu_items = cur.fetchall()
+
+    if request.method == "POST":
+        order_id = request.form.get('order_id')
+        item_id = request.form.get('item_id')
+        quantity = request.form.get('quantity')
+        # Fetch the price of the selected menu item
+        cur.execute("SELECT price FROM MenuItems WHERE item_id = %s", (item_id,))
+        item_price = cur.fetchone()['price']
+        # Calculate subtotal for the entered quantity
+        subtotal = float(item_price) * int(quantity)
+
+        if order_id and item_id and quantity and item_price:
+            insert_query = """
+            INSERT INTO OrderDetails (order_id, item_id, quantity, price)
+            VALUES (%s, %s, %s, %s)
+            """
+            cur.execute(insert_query, (order_id, item_id, quantity, item_price))
+            mysql.connection.commit()
+
+            # Update total amount in Orders table
+            cur.execute("""
+                UPDATE Orders 
+                SET total_amount = total_amount + %s 
+                WHERE order_id = %s
+            """, (float(item_price) * int(quantity), order_id))
+            mysql.connection.commit()
+
+        cur.close()
+        return redirect('/order_details')
+
+    # Populate table with order details from database
+    query = """
+    SELECT 
+        OrderDetails.order_detail_id,
+        Customers.customer_name,
+        Orders.order_date,
+        MenuItems.dish_name AS menu_item,
+        OrderDetails.price,
+        OrderDetails.quantity,
+        (OrderDetails.price * OrderDetails.quantity) AS subtotal
+    FROM 
+        OrderDetails
+    JOIN 
+        Orders ON OrderDetails.order_id = Orders.order_id
+    JOIN 
+        Customers ON Orders.customer_id = Customers.customer_id
+    JOIN 
+        MenuItems ON OrderDetails.item_id = MenuItems.item_id
+    """
+    cur.execute(query)
+    details = cur.fetchall()
+    cur.close()
+
+    # Format order date
+    for detail in details:
+        if detail['order_date']:
+            detail['order_date'] = detail['order_date'].strftime('%Y-%m-%d')
+
+    return render_template('order_details.html', orders=orders, menu_items=menu_items, details=details, year=year)
 
 
 # Listener
