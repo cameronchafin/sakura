@@ -6,7 +6,7 @@ function setupDeleteCustomer(customerId) {
 }
 
 // Update customer
-function setupEdit(button) {
+function setupEditCustomer(button) {
     // Retrieve data attributes from the button
     var customerId = button.getAttribute('data-id');
     var customerName = button.getAttribute('data-name');
@@ -26,6 +26,23 @@ function setupEdit(button) {
 // Delete employee
 function setupDeleteEmployee(employeeId) {
     document.getElementById('delete-employee-id').value = employeeId;
+}
+
+// Update employee
+function setupEditEmployee(button) {
+    // Retrieve data attributes from the button
+    var employeeId = button.getAttribute('data-id');
+    var employeeName = button.getAttribute('data-name');
+    var employeePhone = button.getAttribute('data-phone');
+    var employeeEmail = button.getAttribute('data-email');
+    var employeeCurrent = button.getAttribute('data-current');
+    
+    // Set the values in the modal's form
+    document.getElementById('employeeId').value = employeeId;
+    document.getElementById('inputName_edit').value = employeeName;
+    document.getElementById('inputPhone_edit').value = employeePhone;
+    document.getElementById('inputEmail_edit').value = employeeEmail;
+    document.getElementById('selectCurrent_edit').value = employeeCurrent;
 }
 
 

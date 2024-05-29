@@ -40,7 +40,7 @@ Customers
                       data-name="{{ customer.customer_name }}"
                       data-phone="{{ customer.phone_number }}"
                       data-email="{{ customer.email }}"
-                      onclick="setupEdit(this)">
+                      onclick="setupEditCustomer(this)">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </button>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteCustomer({{ customer.customer_id }})">

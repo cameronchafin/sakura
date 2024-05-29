@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, redirect
+from flask import Flask, render_template, json, redirect, flash
 from flask_mysqldb import MySQL
 from flask import request
 import datetime
@@ -154,7 +154,26 @@ def delete_employee():
     return redirect('/employees')
 
 
-# Todo: Edit Employee
+# Edit Employee
+@app.route('/employees/update', methods=['POST'])
+def update_employee():
+    if request.method == 'POST':
+        employee_id = request.form['employee_id']
+        employee_name = request.form['employee_name']
+        phone_number = request.form['phone_number']
+        email = request.form['email']
+        current = True if request.form.get('current') == '1' else False
+
+        cur = mysql.connection.cursor()
+        query = """
+        UPDATE Employees
+        SET employee_name = %s, phone_number = %s, email = %s, current = %s
+        WHERE employee_id = %s
+        """
+        cur.execute(query, (employee_name, phone_number, email, current, employee_id))
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/employees')
 
 
 # ---------- Menu ---------- #
