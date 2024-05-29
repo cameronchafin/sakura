@@ -228,6 +228,29 @@ def delete_menu_item():
     return redirect('/menu')
 
 
+# Edit Menu Item
+@app.route('/menu/update', methods=['POST'])
+def update_menu_item():
+    if request.method == 'POST':
+        item_id = request.form['item_id']
+        dish_name = request.form['dish_name']
+        price = request.form['price']
+        description = request.form['description']
+        category = request.form.get('category')
+        current = True if request.form.get('current') == '1' else False
+
+        cur = mysql.connection.cursor()
+        query = """
+        UPDATE MenuItems
+        SET dish_name = %s, price = %s, description = %s, category = %s, current = %s
+        WHERE item_id = %s
+        """
+        cur.execute(query, (dish_name, price, description, category, current, item_id))
+        mysql.connection.commit()
+        cur.close()
+    return redirect('/menu')
+
+
 # ---------- Orders ---------- #
 @app.route('/orders', methods=["POST", "GET"])
 def orders():

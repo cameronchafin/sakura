@@ -52,6 +52,24 @@ function setupDeleteMenuItem(itemId) {
     document.getElementById('delete-menu-item-id').value = itemId;
 }
 
+// Update menu item
+function setupEditMenuItem(button) {
+    // Retrieve data attributes from the button
+    var itemId = button.getAttribute('data-id');
+    var itemName = button.getAttribute('data-dish-name');
+    var itemPrice = button.getAttribute('data-price');
+    var itemDescription = button.getAttribute('data-description');
+    var itemCategory = button.getAttribute('data-category');
+    var itemCurrent = button.getAttribute('data-current');
+    
+    // Set the values in the modal's form
+    document.getElementById('menuItemId').value = itemId;
+    document.getElementById('inputDishName_edit').value = itemName;
+    document.getElementById('inputPrice_edit').value = itemPrice;
+    document.getElementById('inputDescription_edit').value = itemDescription;
+    document.getElementById('selectCategory_edit').value = itemCategory;
+    document.getElementById('selectCurrent_edit').value = itemCurrent;
+}
 
 
 // ----- Orders ----- //
