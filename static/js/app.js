@@ -1,10 +1,5 @@
 // ----- Customers ----- //
 
-// Delete customer
-function setupDeleteCustomer(customerId) {
-    document.getElementById('delete-customer-id').value = customerId;
-}
-
 // Update customer
 function setupEditCustomer(button) {
     // Retrieve data attributes from the button
@@ -22,11 +17,6 @@ function setupEditCustomer(button) {
 
 
 // ----- Employees ----- //
-
-// Delete employee
-function setupDeleteEmployee(employeeId) {
-    document.getElementById('delete-employee-id').value = employeeId;
-}
 
 // Update employee
 function setupEditEmployee(button) {
@@ -47,10 +37,6 @@ function setupEditEmployee(button) {
 
 
 // ----- Menu Items ----- //
-// Delete menu item
-function setupDeleteMenuItem(itemId) {
-    document.getElementById('delete-menu-item-id').value = itemId;
-}
 
 // Update menu item
 function setupEditMenuItem(button) {
@@ -73,9 +59,6 @@ function setupEditMenuItem(button) {
 
 
 // ----- Orders ----- //
-function setupDeleteOrder(orderId) {
-    document.getElementById('delete-order-id').value = orderId;
-}
 
 // Update order
 function setupEditOrder(button) {

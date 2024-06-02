@@ -69,19 +69,6 @@ def customers():
     return render_template('customers.html', data=data, year=year)
 
 
-# Delete a customer
-@app.route('/customers/delete', methods=['POST'])
-def delete_customer():
-    customer_id = request.form.get('customer_id')
-    if customer_id:
-        query = "DELETE FROM Customers WHERE customer_id = %s"
-        cur = mysql.connection.cursor()
-        cur.execute(query, (customer_id,))
-        mysql.connection.commit()
-        cur.close()
-    return redirect('/customers')
-
-
 # Edit customer
 @app.route('/customers/update', methods=['POST'])
 def update_customer():
@@ -139,19 +126,6 @@ def employees():
         cur.close()
 
     return render_template('employees.html', data=data, year=year)
-
-
-# Delete an Employee
-@app.route('/employees/delete', methods=['POST'])
-def delete_employee():
-    employee_id = request.form.get('employee_id')
-    if employee_id:
-        query = "DELETE FROM Employees WHERE employee_id = %s"
-        cur = mysql.connection.cursor()
-        cur.execute(query, (employee_id,))
-        mysql.connection.commit()
-        cur.close()
-    return redirect('/employees')
 
 
 # Edit Employee
@@ -213,19 +187,6 @@ def menu():
         cur.close()
 
     return render_template('menu.html', data=data, year=year)
-
-
-# Delete a Menu Item
-@app.route('/menu/delete', methods=['POST'])
-def delete_menu_item():
-    item_id = request.form.get('item_id')
-    if item_id:
-        query = "DELETE FROM MenuItems WHERE item_id = %s"
-        cur = mysql.connection.cursor()
-        cur.execute(query, (item_id,))
-        mysql.connection.commit()
-        cur.close()
-    return redirect('/menu')
 
 
 # Edit Menu Item
@@ -312,19 +273,6 @@ def orders():
             order['order_date'] = order['order_date'].strftime('%Y-%m-%d')
 
     return render_template('orders.html', customers=customers, employees=employees, data=data, year=year)
-
-
-# Delete an Order
-@app.route('/orders/delete', methods=['POST'])
-def delete_order():
-    order_id = request.form.get('order_id')
-    if order_id:
-        query = "DELETE FROM Orders WHERE order_id = %s"
-        cur = mysql.connection.cursor()
-        cur.execute(query, (order_id,))
-        mysql.connection.commit()
-        cur.close()
-    return redirect('/orders')
 
 
 # Edit an Order
