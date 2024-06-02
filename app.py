@@ -76,7 +76,7 @@ def delete_customer():
     if customer_id:
         query = "DELETE FROM Customers WHERE customer_id = %s"
         cur = mysql.connection.cursor()
-        cur.execute(query, (customer_id))
+        cur.execute(query, (customer_id,))
         mysql.connection.commit()
         cur.close()
     return redirect('/customers')
@@ -148,7 +148,7 @@ def delete_employee():
     if employee_id:
         query = "DELETE FROM Employees WHERE employee_id = %s"
         cur = mysql.connection.cursor()
-        cur.execute(query, (employee_id))
+        cur.execute(query, (employee_id,))
         mysql.connection.commit()
         cur.close()
     return redirect('/employees')
@@ -222,7 +222,7 @@ def delete_menu_item():
     if item_id:
         query = "DELETE FROM MenuItems WHERE item_id = %s"
         cur = mysql.connection.cursor()
-        cur.execute(query, (item_id))
+        cur.execute(query, (item_id,))
         mysql.connection.commit()
         cur.close()
     return redirect('/menu')
@@ -321,9 +321,32 @@ def delete_order():
     if order_id:
         query = "DELETE FROM Orders WHERE order_id = %s"
         cur = mysql.connection.cursor()
-        cur.execute(query, (order_id))
+        cur.execute(query, (order_id,))
         mysql.connection.commit()
         cur.close()
+    return redirect('/orders')
+
+
+# Edit an Order
+@app.route('/orders/update', methods=['POST'])
+def update_order():
+    order_id = request.form['order_id']
+    customer_id = request.form['customer']
+    employee_id = request.form['employee']
+    order_date = request.form['date']
+    status = request.form['status']
+
+    if customer_id and employee_id and order_date and status:
+        query = """
+        UPDATE Orders
+        SET customer_id = %s, employee_id = %s, order_date = %s, status = %s
+        WHERE order_id = %s
+        """
+        cur = mysql.connection.cursor()
+        cur.execute(query, (customer_id, employee_id, order_date, status, order_id))
+        mysql.connection.commit()
+        cur.close()
+
     return redirect('/orders')
 
 

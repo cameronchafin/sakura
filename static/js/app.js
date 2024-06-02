@@ -77,7 +77,48 @@ function setupDeleteOrder(orderId) {
     document.getElementById('delete-order-id').value = orderId;
 }
 
+// Update order
+function setupEditOrder(button) {
+    // Retrieve data attributes from the button
+    var orderId = button.getAttribute('data-id');
+    var customerName = button.getAttribute('data-customer-name');
+    var employeeName = button.getAttribute('data-employee-name');
+    var orderDate = button.getAttribute('data-date');
+    var orderStatus = button.getAttribute('data-status');
 
+    
+    // Set the values in the modal's form
+    document.getElementById('orderId').value = orderId;
+
+        // Set the customer dropdown
+    var customerSelect = document.getElementById('selectCustomer_edit');
+    for (var i = 0; i < customerSelect.options.length; i++) {
+        if (customerSelect.options[i].text === customerName) {
+            customerSelect.options[i].selected = true;
+            break;
+        }
+    }
+
+    // Set the employee dropdown
+    var employeeSelect = document.getElementById('selectEmployee_edit');
+    for (var i = 0; i < employeeSelect.options.length; i++) {
+        if (employeeSelect.options[i].text === employeeName) {
+            employeeSelect.options[i].selected = true;
+            break;
+        }
+    }
+
+    document.getElementById('inputOrderDate_edit').value = orderDate;
+    
+    // Set the status dropdown
+    var statusSelect = document.getElementById('selectStatus_edit');
+    for (var i = 0; i < statusSelect.options.length; i++) {
+        if (statusSelect.options[i].text === orderStatus) {
+            statusSelect.options[i].selected = true;
+            break;
+        }
+    }
+}
 
 // ----- Order Details ----- //
 function setupDeleteOrderDetail(orderDetailId) {

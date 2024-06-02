@@ -39,8 +39,14 @@ Orders
             <td>${{ order.total_amount }}</td>
             <td>
                 <!-- Button trigger for edit order modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
+                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderModal"
+                    data-id="{{ order.order_id }}"
+                    data-customer-name="{{ order.customer_name }}"
+                    data-employee-name="{{ order.employee_name}}"
+                    data-date="{{ order.order_date }}"
+                    data-status="{{ order.status }}"
+                    onclick="setupEditOrder(this)">
+                  <i class="fa-regular fa-pen-to-square"></i>
                 </button>
                 <!-- Button trigger for delete modal -->
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteOrder({{ order.order_id }})">
@@ -113,36 +119,33 @@ Orders
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="/orders/update">
+              <input type="hidden" id="orderId" name="order_id" value="">
                 <div class="mb-3">
                     <label for="selectCustomer" class="form-label">Customer</label>
-                    <select class="form-select" aria-label="Customer Select">
-                        <option selected>Customer</option>
-                        <option value="1">John Doe</option>
-                        <option value="2">Bob Smith</option>
-                        <option value="3">Bob Joe</option>
-                        <option value="4">Ricky Bobby</option>
-                        <option value="4">Ned Flanders</option>
+                    <select class="form-select" id="selectCustomer_edit" name="customer" aria-label="Customer Select">
+                      <option selected disabled>Choose a Customer</option>
+                      {% for customer in customers %}
+                      <option value="{{ customer.customer_id }}">{{ customer.customer_name }}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="selectEmployee" class="form-label">Employee</label>
-                    <select class="form-select" aria-label="Employee Select">
-                        <option selected>Employee</option>
-                        <option value="1">Teddy Bear</option>
-                        <option value="2">Bill Nye</option>
-                        <option value="3">Homer Simpson</option>
-                        <option value="4">Peter Griffin</option>
-                        <option value="4">Peter Parker</option>
+                    <select class="form-select" id="selectEmployee_edit" name="employee" aria-label="Employee Select">
+                      <option selected disabled>Choose an Employee</option>
+                      {% for employee in employees %}
+                      <option value="{{ employee.employee_id }}">{{ employee.employee_name }}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="inputOrderDate" class="form-label">Order Date</label>
-                    <input type="date" class="form-control" id="inputOrderDate" placeholder="mm-dd-yyyy">
+                    <input type="date" class="form-control" id="inputOrderDate_edit" name="date" placeholder="mm-dd-yyyy">
                 </div>
                 <div class="mb-3">
                     <label for="selectStatus" class="form-label">Status</label>
-                    <select class="form-select" aria-label="Status Select">
+                    <select class="form-select" id="selectStatus_edit" name="status" aria-label="Status Select">
                         <option selected>Status</option>
                         <option value="1">Placed</option>
                         <option value="2">Preparing</option>
@@ -150,11 +153,11 @@ Orders
                         <option value="4">Paid</option>
                     </select>
                 </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn custom-solid">Save Menu Item</button>
+                </div>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn custom-solid">Save Menu Item</button>
         </div>
       </div>
     </div>
