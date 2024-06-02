@@ -25,7 +25,7 @@ Orders
             <th scope="col">Order Date</th>
             <th scope="col">Status</th>
             <th scope="col">Total Amount</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Edit</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -49,9 +49,9 @@ Orders
                   <i class="fa-regular fa-pen-to-square"></i>
                 </button>
                 <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteOrder({{ order.order_id }})">
+                <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteOrder({{ order.order_id }})">
                     <i class="fa-regular fa-trash-can"></i>
-                </button>
+                </button> -->
             </td>
             {% endfor %}
         </tbody>

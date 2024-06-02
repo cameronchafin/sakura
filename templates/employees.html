@@ -24,7 +24,7 @@ Employees
             <th scope="col">Phone</th>
             <th scope="col">Email</th>
             <th scope="col">Current</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Edit</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -47,9 +47,9 @@ Employees
                   <i class="fa-regular fa-pen-to-square"></i>
                 </button>
                 <!-- Button trigger for delete modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteEmployee({{ employee.employee_id }})">
+                <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteEmployee({{ employee.employee_id }})">
                     <i class="fa-regular fa-trash-can"></i>
-                </button>
+                </button> -->
             </td>
           </tr>
           {% endfor %}

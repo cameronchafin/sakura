@@ -120,7 +120,30 @@ function setupEditOrder(button) {
     }
 }
 
+
 // ----- Order Details ----- //
 function setupDeleteOrderDetail(orderDetailId) {
     document.getElementById('delete-order-detail-id').value = orderDetailId;
+}
+
+// Update order detail
+function setupEditOrderDetail(button) {
+    // Retrieve data attributes from the button
+    var orderDetailId = button.getAttribute('data-order-detail-id');
+    var itemId = button.getAttribute('data-item-id');
+    var quantity = button.getAttribute('data-quantity');
+    
+    // Set the values in the modal's form
+    document.getElementById('orderDetailId').value = orderDetailId;
+
+    // Set the menu item dropdown
+    var itemSelect = document.getElementById('selectItem_edit');
+    for (var i = 0; i < itemSelect.options.length; i++) {
+        if (itemSelect.options[i].value == itemId) {
+            itemSelect.options[i].selected = true;
+            break;
+        }
+    }
+
+    document.getElementById('inputQuantity_edit').value = quantity;
 }

@@ -41,8 +41,12 @@ Order Details
             <td>${{ detail.subtotal }}</td>
             <td>
                 <!-- Button trigger for edit order details modal -->
-                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderDetailModal">
-                    <i class="fa-regular fa-pen-to-square"></i>
+                <button type="button" class="btn custom-solid" data-bs-toggle="modal" data-bs-target="#editOrderDetailModal"
+                    data-order-detail-id="{{ detail.order_detail_id }}"
+                    data-item-id="{{ detail.item_id }}"
+                    data-quantity="{{ detail.quantity }}"
+                    onclick="setupEditOrderDetail(this)">
+                  <i class="fa-regular fa-pen-to-square"></i>
                 </button>
                 <!-- Button trigger for delete modal -->
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteOrderDetail({{ detail.order_detail_id }})">
@@ -106,35 +110,25 @@ Order Details
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="/order_details/update">
+              <input type="hidden" id="orderDetailId" name="order_detail_id">
                 <div class="mb-3">
-                    <label for="selectCustomer" class="form-label">Customer</label>
-                    <select class="form-select" aria-label="Customer Select">
-                        <option selected>Customer</option>
-                        <option value="1">John Doe</option>
-                        <option value="2">Bob Smith</option>
-                        <option value="3">Bob Joe</option>
-                        <option value="4">Ricky Bobby</option>
-                        <option value="4">Ned Flanders</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="inputDate" class="form-label">Date</label>
-                    <input type="Date" class="form-control" id="inputDate" placeholder="mm-dd-yyyy">
-                </div>
-                <div class="mb-3">
-                  <label for="inputMenuItem" class="form-label">Menu Item</label>
-                  <input type="text" class="form-control" id="inputMenuItem" placeholder="Menu Item">
+                  <label for="selectItem_edit" class="form-label">Menu Item</label>
+                  <select class="form-select" id="selectItem_edit" name="item_id" aria-label="Item Select">
+                    {% for item in menu_items %}
+                    <option value="{{ item.item_id }}">{{ item.dish_name }}</option>
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="mb-3">
                     <label for="inputQuantity" class="form-label">Quantity</label>
-                    <input type="text" class="form-control" id="inputQuantity" placeholder="0">
+                    <input type="text" class="form-control" id="inputQuantity_edit" name="quantity" placeholder="0">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn custom-solid">Save Order Detail</button>
                 </div>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn custom-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn custom-solid">Save Order Detail</button>
         </div>
       </div>
     </div>

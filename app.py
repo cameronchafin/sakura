@@ -468,6 +468,52 @@ def delete_order_detail():
     return redirect('/order_details')
 
 
+@app.route('/order_details/update', methods=['POST'])
+def update_order_detail():
+    if request.method == 'POST':
+        order_detail_id = request.form['order_detail_id']
+        item_id = request.form['item_id']
+        quantity = request.form['quantity']
+        
+        cur = mysql.connection.cursor()
+
+        # Fetch the price of the selected menu item
+        cur.execute("SELECT price FROM MenuItems WHERE item_id = %s", (item_id,))
+        item_price = cur.fetchone()['price']
+        # Calculate new subtotal for the entered quantity
+        new_subtotal = float(item_price) * int(quantity)
+
+        # Fetch the old price and quantity for the order detail
+        cur.execute("""
+            SELECT price, quantity, order_id 
+            FROM OrderDetails 
+            WHERE order_detail_id = %s
+        """, (order_detail_id,))
+        old_detail = cur.fetchone()
+        old_subtotal = float(old_detail['price']) * int(old_detail['quantity'])
+        order_id = old_detail['order_id']
+
+        # Update order detail
+        update_query = """
+        UPDATE OrderDetails
+        SET item_id = %s, quantity = %s, price = %s
+        WHERE order_detail_id = %s
+        """
+        cur.execute(update_query, (item_id, quantity, item_price, order_detail_id))
+
+        # Update total amount in Orders table
+        cur.execute("""
+            UPDATE Orders 
+            SET total_amount = total_amount - %s + %s
+            WHERE order_id = %s
+        """, (old_subtotal, new_subtotal, order_id))
+
+        mysql.connection.commit()
+        cur.close()
+
+    return redirect('/order_details')
+
+
 # Listener
 if __name__ == "__main__":
 

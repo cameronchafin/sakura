@@ -25,7 +25,7 @@ Menu
             <th scope="col">Description</th>
             <th scope="col">Category</th>
             <th scope="col">Current</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Edit</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -50,9 +50,9 @@ Menu
                   <i class="fa-regular fa-pen-to-square"></i>
                 </button>
               <!-- Button trigger for delete modal -->
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteMenuItem({{ menu_item.item_id }})">
+              <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setupDeleteMenuItem({{ menu_item.item_id }})">
                   <i class="fa-regular fa-trash-can"></i>
-              </button>
+              </button> -->
             </td>
           </tr>
           {% endfor %}
