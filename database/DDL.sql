@@ -1,3 +1,6 @@
+-- This file features the data definition queries from which the database
+-- server used to host this application's database is sourced
+
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT = 0;
 

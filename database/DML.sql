@@ -1,5 +1,7 @@
+-- This file features data manipulation queries that match those
+-- found in the server-side code for the various routes in the application
 
---CUSTOMERS TABLE
+------- CUSTOMERS TABLE -------
 
 -- get data for all customers
 SELECT *
@@ -18,22 +20,22 @@ VALUES (
 );
 
 
--- update customers phone number and email based on customer_id
+-- update customer based on customer_id
 UPDATE Customers
-SET phone_number = :phone_number_input,
+SET customer_name = :customer_name_input,
+    phone_number = :phone_number_input,
     email = :email_input
 WHERE customer_id = :customer_id_input;
 
 
 
---EMPLOYEES TABLE
+------- EMPLOYEES TABLE -------
 
--- this provides the information of all Employees who are currently employed at the company.
+-- get data for all employees
 SELECT *
-FROM Employees
-WHERE Current = 1;
+FROM Employees;
 
--- this allows to insert / add a new employee into the employees table
+-- insert / add a new employee into the database
 INSERT INTO Employees (
     employee_name,
     phone_number,
@@ -47,21 +49,41 @@ VALUES (
     :current_status
 );
 
--- update the employees working status
+-- update employee base on employee_id
 UPDATE Employees
-SET current = :status_entered
-WHERE employee_id = :employee_id_entered;
+SET employee_name = :employee_name_input,
+    phone_number = :phone_number_input,
+    email = :email_input,
+    current = :current_input
+WHERE employee_id = :employee_id_input;
 
 
--- ORDERS TABLE
 
---returns all the orders from the past year
-SELECT *
-FROM Orders
-where order_date >= CURDATE() - INTERVAL 365 DAY;
+------- ORDERS TABLE -------
+
+-- fetch customers for dropdown
+SELECT customer_id, customer_name FROM Customers;
+
+-- fetch only current employees for dropdown
+SELECT employee_id, employee_name FROM Employees WHERE current = 1;
+
+-- get data for all orders
+SELECT 
+    Orders.order_id,
+    Customers.customer_name,
+    Employees.employee_name,
+    Orders.order_date,
+    Orders.status,
+    Orders.total_amount
+FROM 
+    Orders
+JOIN 
+    Customers ON Orders.customer_id = Customers.customer_id
+LEFT JOIN 
+    Employees ON Orders.employee_id = Employees.employee_id;
 
 
--- put an order into the system
+-- insert / add new order into the database
 INSERT INTO Orders (
     customer_id,
     employee_id,
@@ -70,31 +92,30 @@ INSERT INTO Orders (
     total_amount
 )
 VALUES (
-    :value_for_customer_id,
-    :value_for_employee_id,
-    :value_for_order_date,
-    :order_status,
-    :calculated_full_amount
+    :customer_id_input,
+    :employee_id_input,  -- Nullable field
+    :order_date_input,
+    :status_input,
+    :total_amount_input
 );
 
--- delete order from the system
-DELETE FROM Orders
-WHERE order_id = :order_id_selected_from_order_page;
+-- update order based on order_id
+UPDATE Orders
+SET customer_id = :customer_id_input,
+    employee_id = :employee_id_input,  -- Nullable field
+    order_date = :order_date_input,
+    status = :status_input
+WHERE order_id = :order_id_input;
 
--- update order status
-UPDATE Orders 
-SET status = :statusinput
-WHERE order_id = :order_id_selected_from_order_page;
 
 
--- MENU ITEMS TABLE
+------- MENU ITEMS TABLE -------
 
 -- select all menu items currently available
 SELECT *
-FROM MenuItems
-WHERE current = 1;
+FROM MenuItems;
 
--- insert a new menu item
+-- insert a new menu item into the database
 INSERT INTO MenuItems (
     dish_name,
     price,
@@ -103,58 +124,89 @@ INSERT INTO MenuItems (
     current
 )
 VALUES (
-    :dish_name_inserted,
-    :price_inserted,
-    :description_inserted,
-    :categoy_inserted,
-    :current_status_inserted
+    :dish_name_input,
+    :price_input,
+    :description_input,
+    :category_input,
+    :current_input
 );
 
-
--- remove a menu item
-DELETE FROM MenuItems
-WHERE item_id = :item_id_chosen_on_menu_item_page;
-
--- update the price of a menu item
+-- update menu item based on item_id
 UPDATE MenuItems
-SET price = :price_input,
-WHERE item_id = :item_id_chosen_on_menu_item_page;
+SET dish_name = :dish_name_input,
+    price = :price_input,
+    description = :description_input,
+    category = :category_input,
+    current = :current_input
+WHERE item_id = :item_id_input;
 
 
 
---ORDER DETAILS TABLE
+------- ORDER DETAILS TABLE -------
 
---select all the details for a specific order_id
-SELECT *
-FROM OrderDetails
-WHERE order_id = :order_id_selected_from_order_details_page;
+-- fetch existing orders for dropdown
+SELECT Orders.order_id, Customers.customer_name, Orders.order_date
+FROM Orders
+JOIN Customers ON Orders.customer_id = Customers.customer_id
+ORDER BY Orders.order_date DESC;
 
+-- fetch all menu items for dropdown
+SELECT item_id, dish_name FROM MenuItems;
 
--- add new order details
-INSERT INTO OrderDetails (order_id, item_id, quantity, price)
-SELECT
-    o.order_id, 
-    m.item_id, 
-    :quantity_entered_from_order_details_page,
-    m.price
+-- get data for all order details
+SELECT 
+    OrderDetails.order_detail_id,
+    Customers.customer_name,
+    Orders.order_date,
+    MenuItems.dish_name AS menu_item,
+    OrderDetails.price,
+    OrderDetails.quantity,
+    (OrderDetails.price * OrderDetails.quantity) AS subtotal
 FROM 
-    Orders o
+    OrderDetails
 JOIN 
-    MenuItems m ON m.dish_name = :dish_name_input
-JOIN
-    Customers c ON c.customer_id = o.customer_id
-WHERE 
-    c.customer_name = :customer_name_input AND 
-    o.order_date = :order_date_input;
+    Orders ON OrderDetails.order_id = Orders.order_id
+JOIN 
+    Customers ON Orders.customer_id = Customers.customer_id
+JOIN 
+    MenuItems ON OrderDetails.item_id = MenuItems.item_id;
 
+-- insert / add new order detail into the database
+INSERT INTO OrderDetails (
+    order_id,
+    item_id,
+    quantity,
+    price
+)
+VALUES (
+    :order_id_input,
+    :item_id_input,
+    :quantity_input,
+    :price_input
+);
 
+-- update total amount in Orders table after adding order detail
+UPDATE Orders 
+SET total_amount = total_amount + :subtotal_input
+WHERE order_id = :order_id_input;
 
--- Update the quantity in the OrderDetails table
+-- update order detail based on order_detail_id
 UPDATE OrderDetails
-SET quantity = :quantity_entered
-WHERE order_id = :order_id_entered;
-
-
--- Delete from order details based on order detail id
-DELETE FROM OrderDetails
+SET item_id = :item_id_input, 
+    quantity = :quantity_input, 
+    price = :price_input
 WHERE order_detail_id = :order_detail_id_input;
+
+-- update total amount in Orders table after updating order detail
+UPDATE Orders 
+SET total_amount = total_amount - :old_subtotal_input + :new_subtotal_input
+WHERE order_id = :order_id_input;
+
+-- delete order detail based on order_detail_id
+DELETE FROM OrderDetails 
+WHERE order_detail_id = :order_detail_id_input;
+
+-- update total amount in Orders table after deleting order detail
+UPDATE Orders 
+SET total_amount = total_amount - :amount_to_subtract_input 
+WHERE order_id = :order_id_input;
