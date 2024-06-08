@@ -1,3 +1,9 @@
+# Citation for connecting database to app:
+# Date: 6/8/2024
+# All code in this file was taken from the starter flask app
+# https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/database/db_connector.py
+# No original code here
+
 import MySQLdb
 import os
 from dotenv import load_dotenv, find_dotenv
