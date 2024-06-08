@@ -84,11 +84,15 @@ function setupEditOrder(button) {
 
     // Set the employee dropdown
     var employeeSelect = document.getElementById('selectEmployee_edit');
-    for (var i = 0; i < employeeSelect.options.length; i++) {
-        if (employeeSelect.options[i].text === employeeName) {
-            employeeSelect.options[i].selected = true;
-            break;
+    if (employeeName) {
+        for (var i = 0; i < employeeSelect.options.length; i++) {
+            if (employeeSelect.options[i].text === employeeName) {
+                employeeSelect.options[i].selected = true;
+                break;
+            }
         }
+    } else {
+        employeeSelect.value = ""; // If None is selected
     }
 
     document.getElementById('inputOrderDate_edit').value = orderDate;

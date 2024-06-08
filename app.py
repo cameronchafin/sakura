@@ -231,18 +231,18 @@ def orders():
     # Add an order
     if request.method == "POST":
         customer_id = request.form['customer']
-        employee_id = request.form['employee']
+        employee_id = request.form.get('employee')  # Nullable field
         order_date = request.form['date']
         status = request.form.get('status')
         # Initialize total_amount to 0.00 when creating a new order
         total_amount = 0.00
 
-        if customer_id and employee_id and order_date and status:
+        if customer_id and order_date and status:
             query = """
             INSERT INTO Orders (customer_id, employee_id, order_date, status, total_amount)
             VALUES (%s, %s, %s, %s, %s)
             """
-            cur.execute(query, (customer_id, employee_id, order_date, status, total_amount))
+            cur.execute(query, (customer_id, employee_id if employee_id else None, order_date, status, total_amount))
             mysql.connection.commit()
             cur.close()
             return redirect('/orders')
@@ -260,7 +260,7 @@ def orders():
         Orders
     JOIN 
         Customers ON Orders.customer_id = Customers.customer_id
-    JOIN 
+    LEFT JOIN 
         Employees ON Orders.employee_id = Employees.employee_id
     """
     cur.execute(query)
@@ -280,18 +280,18 @@ def orders():
 def update_order():
     order_id = request.form['order_id']
     customer_id = request.form['customer']
-    employee_id = request.form['employee']
+    employee_id = request.form.get('employee')
     order_date = request.form['date']
     status = request.form['status']
 
-    if customer_id and employee_id and order_date and status:
+    if customer_id and order_date and status:
         query = """
         UPDATE Orders
         SET customer_id = %s, employee_id = %s, order_date = %s, status = %s
         WHERE order_id = %s
         """
         cur = mysql.connection.cursor()
-        cur.execute(query, (customer_id, employee_id, order_date, status, order_id))
+        cur.execute(query, (customer_id, employee_id if employee_id else None, order_date, status, order_id))
         mysql.connection.commit()
         cur.close()
 

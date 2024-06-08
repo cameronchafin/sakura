@@ -33,7 +33,7 @@ Orders
           <tr>
             <th scope="row">{{ order.order_id }}</th>
             <td>{{ order.customer_name }}</td>
-            <td>{{ order.employee_name }}</td>
+            <td>{{ order.employee_name or 'None'}}</td>
             <td>{{ order.order_date }}</td>
             <td>{{ order.status }}</td>
             <td>${{ order.total_amount }}</td>
@@ -74,9 +74,9 @@ Orders
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="selectEmployee" class="form-label">Employee</label>
+                    <label for="selectEmployee" class="form-label">Employee (Optional)</label>
                     <select class="form-select" name="employee" aria-label="Employee Select">
-                      <option selected disabled>Choose an Employee</option>
+                      <option value="" selected>None</option>
                       {% for employee in employees %}
                       <option value="{{ employee.employee_id }}">{{ employee.employee_name }}</option>
                       {% endfor %}
@@ -127,9 +127,9 @@ Orders
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="selectEmployee" class="form-label">Employee</label>
+                    <label for="selectEmployee" class="form-label">Employee (Optional)</label>
                     <select class="form-select" id="selectEmployee_edit" name="employee" aria-label="Employee Select">
-                      <option selected disabled>Choose an Employee</option>
+                      <option value="" selected>None</option>
                       {% for employee in employees %}
                       <option value="{{ employee.employee_id }}">{{ employee.employee_name }}</option>
                       {% endfor %}

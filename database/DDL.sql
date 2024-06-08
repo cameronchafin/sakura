@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS Orders;
 CREATE TABLE Orders (
     order_id int(11) NOT NULL AUTO_INCREMENT,
     customer_id int NOT NULL,
-    employee_id int NOT NULL,
+    employee_id int,
     order_date datetime NOT NULL,
     status ENUM('Placed', 'Preparing', 'Served', 'Paid') NOT NULL, -- Placed, Preparing, Served, Paid
     total_amount decimal(10,2) NOT NULL,
