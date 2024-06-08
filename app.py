@@ -6,6 +6,12 @@ import os
 import database.db_connector as db
 from dotenv import load_dotenv, find_dotenv
 
+# Citation for configuring app and connecting to database:
+# Date: 6/8/2024
+# Adapted from OSU Flask Starter APP
+# https://github.com/osu-cs340-ecampus/flask-starter-app
+# All Routes below setup consist of original code based on the 
+# required functionality of the application
 
 db_connection = db.connect_to_database()
 
